@@ -2,23 +2,17 @@ class TodosController < ApplicationController
   before_action :set_todo, only: [:update, :destroy]
 
   def index
-    @completed = Todo.completed
-    @uncompleted = Todo.uncompleted
+    @completed = current_user.todos.completed
+    @uncompleted = current_user.todos.uncompleted
   end
 
   def create
-    @todo = Todo.new(todo_params)
-    @todo.user = current_user
-    
+    @todo = current_user.todos.create(todo_params)    
     render json: @todo.save ? @todo : @todo.errors 
   end
 
   def update
-    if check_me(@todo.user_id)
-      render json: @todo.update(todo_params) ? @todo : @todo.errors 
-    else
-      render json: { message: "Something went wrong" }, status: :unauthorized
-    end
+    render json: @todo.update(todo_params) ? @todo : @todo.errors 
   end
 
   def destroy
@@ -32,10 +26,6 @@ class TodosController < ApplicationController
   end
 
   def set_todo
-    @todo = Todo.find(params[:id])
-  end
-
-  def check_me(user_id)
-    current_user.id == user_id
+    @todo = current_user.todos.find(params[:id])
   end
 end
