@@ -10,6 +10,9 @@ class User < ApplicationRecord
   enum role: [:user, :admin]
   enum provider: [:google, :github, :facebook, :normal]
 
+  # associations
+  has_many :todos, dependent: :destroy
+
   def as_json(*_args)
     {
       id: id,
