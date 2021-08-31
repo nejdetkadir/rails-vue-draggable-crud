@@ -1,4 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/37165033253842d78006d961e892ec02)](https://www.codacy.com/gh/nejdetkadir/rails-boilerplate/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nejdetkadir/rails-boilerplate&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/01ee7faae4d5472db4eeaf1b955ac21f)](https://www.codacy.com/gh/nejdetkadir/rails-vue-draggable-crud/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nejdetkadir/rails-vue-draggable-crud&amp;utm_campaign=Badge_Grade)
 
 # Rails Boilerplate
 A starter template for [Ruby on Rails](https://rubyonrails.org/) with [Vue](https://vuejs.org/)
