@@ -8,16 +8,16 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 text-center">
-      <h4>Todos (Uncompleted)</h4>
+    <div class="col-md-6">
+      <h4 class="text-center">Todos (Uncompleted)</h4>
       <draggable class="list-group" :list="list.uncompleted" group="todos" @change="log">
-        <li class="list-group-item" v-for="(todo, key) in list.uncompleted" :key="key">{{ todo.content }}</li>
+        <todo-card :todo="todo" v-for="(todo, index) in list.uncompleted" :key="index"/>
       </draggable>
     </div>
-    <div class="col-md-6 text-center">
-      <h4>Completed</h4>
+    <div class="col-md-6">
+      <h4 class="text-center">Completed</h4>
       <draggable class="list-group" :list="list.completed" group="todos" @change="log">
-        <li class="list-group-item" v-for="(todo, key) in list.completed" :key="key">{{ todo.content }}</li>
+        <todo-card :todo="todo" v-for="(todo, index) in list.completed" :key="index"/>
       </draggable>
     </div>
   </div>
@@ -26,6 +26,7 @@
 <script>
 import Rails from "@rails/ujs";
 import draggable from "vuedraggable";
+import TodoCard from "./TodoCard.vue"
 
 export default {
   data() {
@@ -41,7 +42,8 @@ export default {
   },
   props: ["completed_data", "uncompleted_data"],
   components: {
-    draggable
+    draggable,
+    TodoCard
   },
   methods: {
     createTodo(){
