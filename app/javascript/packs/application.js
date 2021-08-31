@@ -8,10 +8,14 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 
+// bootstrap
+import "bootstrap/dist/js/bootstrap.bundle";
+
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
+// -- VUE --
 import TurbolinksAdapter from "vue-turbolinks";
 import Vue from "vue/dist/vue.esm";
 import store from "../src/store/index"
