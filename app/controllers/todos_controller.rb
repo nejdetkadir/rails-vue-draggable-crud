@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: [:update, :destory]
+  before_action :set_todo, only: [:update, :destroy]
 
   def index
     @completed = Todo.completed
@@ -19,6 +19,10 @@ class TodosController < ApplicationController
     else
       render json: { message: "Something went wrong" }, status: :unauthorized
     end
+  end
+
+  def destroy
+    render json: @todo.destroy 
   end
 
   private

@@ -11,13 +11,13 @@
     <div class="col-md-6">
       <h4 class="text-center">Todos (Uncompleted)</h4>
       <draggable class="list-group" :list="list.uncompleted" group="todos" @change="log">
-        <todo-card :todo="todo" v-for="(todo, index) in list.uncompleted" :key="index"/>
+        <todo-card :todo="todo" v-for="(todo, index) in list.uncompleted" :key="index" :removeTodo="removeTodo" :data-index="index"/>
       </draggable>
     </div>
     <div class="col-md-6">
       <h4 class="text-center">Completed</h4>
       <draggable class="list-group" :list="list.completed" group="todos" @change="log">
-        <todo-card :todo="todo" v-for="(todo, index) in list.completed" :key="index"/>
+        <todo-card :todo="todo" v-for="(todo, index) in list.completed" :key="index" :removeTodo="removeTodo" :data-index="index"/>
       </draggable>
     </div>
   </div>
@@ -81,6 +81,19 @@ export default {
             if (res.completed != !evt.added.element.completed) {
               window.console.log(res);
             }
+          }
+        })
+      }
+    },
+    removeTodo(e) {
+      if (e.target.attributes[0].nodeValue > 0) {
+        Rails.ajax({
+          beforeSend: () => true,
+          url: `/todos/${e.target.attributes[0].nodeValue}`,
+          type: "DELETE",
+          dataType: "json",
+          success: (res) => {
+            this.$delete(res.completed ? this.list.completed : this.list.uncompleted, e.target.attributes[1].nodeValue)
           }
         })
       }
