@@ -10,21 +10,22 @@
     </div>
     <div class="col-md-6 text-center">
       <h4>Todos (Uncompleted)</h4>
-      <ul class="list-group">
+      <draggable class="list-group" :list="list.uncompleted" group="todos" @change="log">
         <li class="list-group-item" v-for="(todo, key) in list.uncompleted" :key="key">{{ todo.content }}</li>
-      </ul>
+      </draggable>
     </div>
     <div class="col-md-6 text-center">
       <h4>Completed</h4>
-      <ul class="list-group">
+      <draggable class="list-group" :list="list.completed" group="todos" @change="log">
         <li class="list-group-item" v-for="(todo, key) in list.completed" :key="key">{{ todo.content }}</li>
-      </ul>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script>
 import Rails from "@rails/ujs";
+import draggable from "vuedraggable";
 
 export default {
   data() {
@@ -39,6 +40,9 @@ export default {
     }
   },
   props: ["completed_data", "uncompleted_data"],
+  components: {
+    draggable
+  },
   methods: {
     createTodo(){
       const data = new FormData();
@@ -59,6 +63,25 @@ export default {
           }
         }
       })
+    },
+    log(evt) {
+      if (evt.added) {
+        const data = new FormData();
+        data.append("todo[completed]", !evt.added.element.completed);
+
+        Rails.ajax({
+          beforeSend: () => true,
+          url: `/todos/${evt.added.element.id}`,
+          type: "PUT",
+          data,
+          dataType: "json",
+          success: (res) => {
+            if (res.completed != !evt.added.element.completed) {
+              window.console.log(res);
+            }
+          }
+        })
+      }
     }
   }
 }
